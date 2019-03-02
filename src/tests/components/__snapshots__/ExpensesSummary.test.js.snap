@@ -1,25 +1,96 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should match the snapshot for ExpensesSummary with filter variation 1 1`] = `
-<div>
-  <h1>
-    Viewing 
-    3
-     expense totalling 
-    $1,141.95
-  </h1>
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      Viewing 
+      <span>
+        3
+      </span>
+       expense totalling 
+      <span>
+        $1,141.95
+      </span>
+    </h1>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        replace={false}
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`should match the snapshot for ExpensesSummary with filter variation 2 1`] = `
-<div>
-  <h1>
-    Viewing 
-    1
-     expense totalling 
-    $1,095.00
-  </h1>
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      Viewing 
+      <span>
+        1
+      </span>
+       expense totalling 
+      <span>
+        $1,095.00
+      </span>
+    </h1>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        replace={false}
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
 </div>
 `;
 
-exports[`should match the snapshot for ExpensesSummary with filter variation 3 1`] = `<div />`;
+exports[`should match the snapshot for ExpensesSummary with filter variation 3 1`] = `
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      There is no expense.
+    </h1>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        replace={false}
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
+</div>
+`;

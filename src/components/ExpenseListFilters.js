@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
-import { DateRangePicker } from 'react-dates';
+import { DateRangePicker } from 'react-dates'; //https://github.com/airbnb/react-dates
 
 export class ExpenseListFilters extends React.Component {
     state = {
@@ -27,29 +27,40 @@ export class ExpenseListFilters extends React.Component {
     };
     render() {
         return (
-            <div>
-                <input 
-                    type='text' 
-                    value={ this.props.filters.text } //In class-based component this.props is used to access props
-                    onChange={ this.onTextChange } //When value changes onChange is called with event argument
-                />
-                <select 
-                    value={ this.props.filters.sortBy } 
-                    onChange= { this.onSortChange }
-                >
-                    <option value='date'>Date</option>
-                    <option value='amount'>Amount</option>
-                </select>
-                <DateRangePicker
-                    startDate={this.props.filters.startDate} // momentPropTypes.momentObj or null,
-                    endDate={this.props.filters.endDate} // momentPropTypes.momentObj or null,
-                    onDatesChange={this.onDatesChange}
-                    focusedInput={this.state.calendarFocused} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                    onFocusChange={ this.onFocusChange } // PropTypes.func.isRequired,
-                    numberOfMonths = {1}
-                    isOutsideRange ={ ()=> false}
-                    showClearDates = {true}
-                />
+            <div className='content-container'>
+                <div className='input-group'>
+                    <div className='input-group__item'>
+                        <input 
+                        className='text-input'
+                        type='text' 
+                        placeholder='Search Expenses'
+                        value={ this.props.filters.text } //In class-based component this.props is used to access props
+                        onChange={ this.onTextChange } //When value changes onChange is called with event argument
+                        />
+                    </div>
+                    <div className='input-group__item'>
+                        <select
+                        className='select'
+                        value={ this.props.filters.sortBy } 
+                        onChange= { this.onSortChange }
+                        >
+                            <option value='date'>Date</option>
+                            <option value='amount'>Amount</option>
+                        </select>
+                    </div>
+                    <div className='input-group__item'>
+                        <DateRangePicker
+                        startDate={this.props.filters.startDate} // momentPropTypes.momentObj or null,
+                        endDate={this.props.filters.endDate} // momentPropTypes.momentObj or null,
+                        onDatesChange={this.onDatesChange}
+                        focusedInput={this.state.calendarFocused} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                        onFocusChange={ this.onFocusChange } // PropTypes.func.isRequired,
+                        numberOfMonths = {1}
+                        isOutsideRange ={ ()=> false}
+                        showClearDates = {true}
+                        />
+                    </div>
+                </div>
             </div>
         )
     }

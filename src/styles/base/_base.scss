@@ -1,10 +1,18 @@
+* {
+  box-sizing: border-box;
+}
+// when we define height or margin, if it is border-box it include margin and padding
+// if it is content-box, it excludes margin and padding, thus box itself becomes bigger.
+
 html {
   font-size: 62.5%;
 }
 
 body {
+  color: $dark-grey;
   font-family: Helvetica, Arial, sans-serif;
   font-size: $m-size;
+  line-height: 1.6;
 }
 
 button {
