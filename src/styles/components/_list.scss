@@ -56,7 +56,10 @@
 };
 
 .list-item__align-right {
-    text-align: right;
+
+    @media (min-width: $desktop-breakpoint) {
+        text-align: right;
+    }
 }
 
 .list-item__data {

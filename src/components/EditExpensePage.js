@@ -23,6 +23,7 @@ export class EditExpensePage extends React.Component {
         <div className = "content-container">
           <ExpenseForm 
           expense = {this.props.expense}
+          categories = {this.props.categories}
           onSubmit = {this.onSubmit}
           />       
           <button className = 'button button--secondary' onClick = {this.onClick}>Remove Expense</button>
@@ -36,7 +37,8 @@ const mapStateToProps = (state, props) => {
   return {
     expense: state.expenses.find((expense)=>{
       return expense.id === props.match.params.id;
-    })
+    }),
+    categories: state.settings.categories
   }
 }
 
