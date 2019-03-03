@@ -17,3 +17,15 @@
 .button--secondary {
     background: #888888;
 }
+
+.button--expense {
+    background: $red;
+}
+
+.button--income {
+    background: $green;
+}
+
+.button--twobuttons {
+    margin-left: $s-size;
+}

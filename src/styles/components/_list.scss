@@ -55,6 +55,10 @@
     font-size: $font-size-small;
 };
 
+.list-item__align-right {
+    text-align: right;
+}
+
 .list-item__data {
     margin: $s-size 0 0 0;
     
@@ -62,4 +66,12 @@
         margin: 0;
         padding-left: $s-size;
     }
+};
+
+.list-item__income {
+    color: $green;
+};
+
+.list-item__expense {
+    color: $red;
 };

@@ -3,14 +3,14 @@ import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
 
 //Component that we render with React router comes with bunch of methods
-class ExpenseForm extends React.Component {
+class IncomeForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            description: props.expense ? props.expense.description : '',
-            note: props.expense ? props.expense.note : '',
-            amount: props.expense ? (props.expense.amount /100).toString() : '',
-            createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+            description: props.income ? props.income.description : '',
+            note: props.income ? props.income.note : '',
+            amount: props.income ? (props.income.amount /100).toString() : '',
+            createdAt: props.income ? moment(props.income.createdAt) : moment(),
             calendarFocused: false,
             errorState: ''
         };
@@ -91,13 +91,13 @@ class ExpenseForm extends React.Component {
                     />
                     <textarea
                         className='text-area'
-                        placeholder='Add a note for your expense (optional)'
+                        placeholder='Add a note for your income (optional)'
                         value = {this.state.note}
                         onChange = {this.onNoteChange}
                     >
                     </textarea>
                     <div>
-                        <button className = 'button'>{this.props.expense? "Update Expense": "Add Expense"}</button>
+                        <button className = 'button'>{this.props.income? "Update Income": "Add Income"}</button>
                     </div>
                 </form>
             </div>
@@ -105,4 +105,4 @@ class ExpenseForm extends React.Component {
     }
 }
 
-export default ExpenseForm
+export default IncomeForm
