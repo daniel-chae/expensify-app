@@ -34,9 +34,7 @@ firebase.auth().onAuthStateChanged((user)=>{
     if (user) {
         store.dispatch(login(user.uid));
         const categoryPromise = new Promise((resolve) => {
-            if(initializeCategory(user.uid, store)){
-                resolve();
-            }
+            initializeCategory(user.uid, store, resolve)
         })
         categoryPromise.then(()=>{
             store.dispatch(startSetIncomes());     

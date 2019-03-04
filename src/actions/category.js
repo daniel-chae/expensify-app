@@ -19,18 +19,19 @@ export const startSetCategories = () => {
     }
 }
 
-export const initializeCategory = (uid, store) => {
-    database.ref(`users/${uid}/settings/categories`).once('value').then((snapshot)=>{
+export const initializeCategory = (uid, store, resolve) => {
+    return database.ref(`users/${uid}/settings/categories`).once('value').then((snapshot)=>{
         const initialUser = !snapshot.exists()
         if (initialUser) {
             const initialCategories = ['Rent', 'Food', 'Transportation', 'Utilities', 'Shopping', 'Hobby'];
             database.ref(`users/${uid}/settings/categories`).set(initialCategories).then(()=>{
                 store.dispatch(startSetCategories());
-                return true;
+                resolve()
             })
         } else {
-            store.dispatch(startSetCategories());
-            return true;
+            store.dispatch(startSetCategories()).then(()=>{
+                resolve()
+            });
         }   
     })
 }

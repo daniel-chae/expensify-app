@@ -19,6 +19,7 @@ export class AddExpensePage extends React.Component {
         <div className = 'content-container'>
           <ExpenseForm //What to do with added value is decided on parent component, we share the same expenseForm for adding and editing
           onSubmit={this.onSubmit}
+          categories={this.props.categories}
           />       
         </div>
       </div>
@@ -26,13 +27,15 @@ export class AddExpensePage extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({categories: state.settings.categories})
+
 const mapDispatchToProps = (dispatch) => {
   return {
     startAddExpense: (expense) => dispatch(startAddExpense(expense))
   };
 };
 
-export default connect(undefined, mapDispatchToProps)(AddExpensePage);
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpensePage);
 
 //mapStateToProps, mapDispatchToProps
 //in props.dispatch(addExpense(expense)) addExpense(expense) function is not

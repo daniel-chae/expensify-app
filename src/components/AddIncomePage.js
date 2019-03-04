@@ -25,11 +25,11 @@ export class AddIncomePage extends React.Component {
         )
       }
     }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    startAddIncome: (income) => dispatch(startAddIncome(income))
+  };
+};
     
-    const mapDispatchToProps = (dispatch) => {
-      return {
-        startAddIncome: (income) => dispatch(startAddIncome(income))
-      };
-    };
-    
-    export default connect(undefined, mapDispatchToProps)(AddIncomePage);
+export default connect(undefined, mapDispatchToProps)(AddIncomePage);
