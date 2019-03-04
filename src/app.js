@@ -12,7 +12,6 @@ import database, { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
 import { startSetIncomes } from './actions/incomes';
 import { initializeCategory } from './actions/category';
-import { PersistGate } from 'redux-persist/integration/react';
 
 const store = configureStore();
 
@@ -35,8 +34,9 @@ firebase.auth().onAuthStateChanged((user)=>{
     if (user) {
         store.dispatch(login(user.uid));
         const categoryPromise = new Promise((resolve) => {
-            initializeCategory(user.uid, store)
-            resolve();
+            if(initializeCategory(user.uid, store)){
+                resolve();
+            }
         })
         categoryPromise.then(()=>{
             store.dispatch(startSetIncomes());     

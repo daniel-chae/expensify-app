@@ -26,9 +26,11 @@ export const initializeCategory = (uid, store) => {
             const initialCategories = ['Rent', 'Food', 'Transportation', 'Utilities', 'Shopping', 'Hobby'];
             database.ref(`users/${uid}/settings/categories`).set(initialCategories).then(()=>{
                 store.dispatch(startSetCategories());
+                return true;
             })
         } else {
             store.dispatch(startSetCategories());
-        }
+            return true;
+        }   
     })
 }
