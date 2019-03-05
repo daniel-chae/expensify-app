@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
-import { connect } from 'react-redux';
+import { currencyList } from '../currency/currency';
 
 //Component that we render with React router comes with bunch of methods
 export class ExpenseForm extends React.Component {
@@ -11,7 +11,8 @@ export class ExpenseForm extends React.Component {
             description: props.expense ? props.expense.description : '',
             note: props.expense ? props.expense.note : '',
             amount: props.expense ? (props.expense.amount /100).toString() : '',
-            category: props.expense ? props.expense.category : 'Food',
+            currency: props.expense ? (props.expense.currency) : 'THB', // update this into default currency.
+            category: props.expense ? props.expense.category : 'Food', // update this into default category.
             createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
             calendarFocused: false,
             errorState: ''
@@ -27,7 +28,6 @@ export class ExpenseForm extends React.Component {
     }
     onAmountChange = (e) => {
         const amount = e.target.value;
-        console.log(this.props)
         if (!amount || amount.match(/^\d+(\.\d{0,2})?$/)) {
             this.setState(()=>({ amount })); 
         }
@@ -37,6 +37,10 @@ export class ExpenseForm extends React.Component {
             this.setState(()=>({ createdAt }));
         }
     }
+    onCurrencyChange = (e) => {
+        const currency = e.target.value;
+        this.setState(()=>({ currency }))
+    }
     onFocusChange=({focused})=>{
         this.setState(()=>({
             calendarFocused: focused
@@ -45,6 +49,11 @@ export class ExpenseForm extends React.Component {
     onCategoryChange = (e) => {
         const category = e.target.value;
         this.setState(()=>({ category }))
+    }
+    currencyOptions = (object) => {
+        return Object.keys(object).map((key)=>{
+            return (<option key={key} value={key}>{object[key]}</option>)
+        })
     }
     onSubmit = ((e) => {
         e.preventDefault(); //To prevent full page refresh
@@ -60,6 +69,7 @@ export class ExpenseForm extends React.Component {
                 description: this.state.description,
                 amount: parseFloat(this.state.amount, 10) * 100, //to turn string into float, similarto parseInt
                 createdAt: this.state.createdAt.valueOf(), //https://momentjs.com/docs/#/displaying/unix-timestamp-milliseconds/
+                currency: this.state.currency,
                 category: this.state.category,
                 note: this.state.note
             });
@@ -88,6 +98,13 @@ export class ExpenseForm extends React.Component {
                         value = {this.state.amount}
                         onChange = {this.onAmountChange}
                     />
+                    <select
+                        className = "select"
+                        value = {this.state.currency}
+                        onChange = {this.onCurrencyChange}
+                    >
+                        {this.currencyOptions(currencyList)}
+                    </select>
                     <SingleDatePicker
                         date = {this.state.createdAt} //To display value from the state
                         onDateChange = {this.onDateChange} //To update value in the state

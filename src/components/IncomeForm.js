@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
+import { currencyList } from '../currency/currency';
 
 //Component that we render with React router comes with bunch of methods
 class IncomeForm extends React.Component {
@@ -10,6 +11,7 @@ class IncomeForm extends React.Component {
             description: props.income ? props.income.description : '',
             note: props.income ? props.income.note : '',
             amount: props.income ? (props.income.amount /100).toString() : '',
+            currency: props.income ? (props.income.currency) : 'THB', // update this into default currency.
             createdAt: props.income ? moment(props.income.createdAt) : moment(),
             calendarFocused: false,
             errorState: ''
@@ -30,6 +32,10 @@ class IncomeForm extends React.Component {
             this.setState(()=>({ amount })); 
         }
     };
+    onCurrencyChange = (e) => {
+        const currency = e.target.value;
+        this.setState(()=>({ currency }))
+    };
     onDateChange = (createdAt) => {
         if (createdAt){
             this.setState(()=>({ createdAt }));
@@ -39,6 +45,11 @@ class IncomeForm extends React.Component {
         this.setState(()=>({
             calendarFocused: focused
         }))
+    }
+    currencyOptions = (object) => {
+        return Object.keys(object).map((key)=>{
+            return (<option key={key} value={key}>{object[key]}</option>)
+        })
     }
     onSubmit = ((e) => {
         e.preventDefault(); //To prevent full page refresh
@@ -53,6 +64,7 @@ class IncomeForm extends React.Component {
             this.props.onSubmit({
                 description: this.state.description,
                 amount: parseFloat(this.state.amount, 10) * 100, //to turn string into float, similarto parseInt
+                currency: this.state.currency,
                 createdAt: this.state.createdAt.valueOf(), //https://momentjs.com/docs/#/displaying/unix-timestamp-milliseconds/
                 note: this.state.note
             });
@@ -81,6 +93,13 @@ class IncomeForm extends React.Component {
                         value = {this.state.amount}
                         onChange = {this.onAmountChange}
                     />
+                    <select
+                        className = "select"
+                        value = {this.state.currency}
+                        onChange = {this.onCurrencyChange}
+                    >
+                        {this.currencyOptions(currencyList)}
+                    </select>
                     <SingleDatePicker
                         date = {this.state.createdAt} //To display value from the state
                         onDateChange = {this.onDateChange} //To update value in the state

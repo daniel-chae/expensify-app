@@ -13,10 +13,11 @@ export const startAddIncome = (incomeData = {}) => {
       description = '',
       note = '',
       amount = 0,
+      currency = '',
       createdAt = 0,
       type = 'income'
     } = incomeData;
-    const  income = { description, note, amount, createdAt, type };
+    const  income = { description, note, amount, createdAt, type, currency };
     return database.ref(`users/${uid}/incomes`).push(income).then((ref)=>{
       dispatch(addIncome({
         id: ref.key,
