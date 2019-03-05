@@ -2,19 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import selectTransactions from '../selectors/transactions';
-import getTotalAmount from '../selectors/transactions-total';
-import numeral from 'numeral'; //http://numeraljs.com/
-import "numeral/locales/th";
+import { totalPerCurrency } from '../selectors/transactions-total';
+import { formattedCurrency } from '../currency/currency';
 
-numeral.locale('th');
 export const TransactionsSummary = (props) => {
-    const sumTransactions = getTotalAmount(props.incomes)-getTotalAmount(props.expenses);
-    const formattedTotal = numeral(sumTransactions/100).format('$0,0.00')
+    const renderTotalPerCurrency = (totalAssets) => {
+        return Object.keys(totalAssets).map((asset)=>{
+            return (<span key={asset}>{formattedCurrency(totalAssets[asset]/100, asset)}</span>)
+        })
+    }
     return (
         <div className="page-header">
             <div className="content-container">
                     <h1 className="page-header__title">
-                    Your current account balance is {formattedTotal}
+                        {renderTotalPerCurrency(totalPerCurrency(props.incomes, props.expenses))}
                     </h1>
                     <div className="page-header__actions">
                         <Link className="button button--income" to="/income/create">Add Income</Link>
