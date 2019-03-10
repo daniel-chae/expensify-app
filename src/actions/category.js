@@ -19,19 +19,30 @@ export const startSetCategories = () => {
     }
 }
 
-export const initializeCategory = (uid, store, resolve) => {
+export const initializeCategory = (uid, store) => {
     return database.ref(`users/${uid}/settings/categories`).once('value').then((snapshot)=>{
         const initialUser = !snapshot.exists()
         if (initialUser) {
             const initialCategories = ['Rent', 'Food', 'Transportation', 'Utilities', 'Shopping', 'Hobby'];
             database.ref(`users/${uid}/settings/categories`).set(initialCategories).then(()=>{
                 store.dispatch(startSetCategories());
-                resolve()
             })
         } else {
             store.dispatch(startSetCategories()).then(()=>{
-                resolve()
             });
         }   
     })
+}
+
+export const setRates = (rates) => ({
+    type: 'SET_RATES',
+    rates
+  })
+
+export const initializeRates = async (store) => {
+    const response = await fetch(`https://openexchangerates.org/api/latest.json?app_id=9e844f98921a4005897657f751480c4b`);
+    if (response.status === 200) {
+        const data = await response.json();
+        store.dispatch(setRates(data.rates));
+    }
 }

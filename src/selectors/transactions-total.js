@@ -5,7 +5,7 @@ export const totalPerCurrency = (incomes, expenses) => {
             transactionSum[income.currency]=0
             transactionSum[income.currency]+=income.amount
         } else {
-            transactionSum[transaction.currency]+=income.amount
+            transactionSum[income.currency]+=income.amount
         };
     });
     expenses.forEach((expense)=>{

@@ -12,6 +12,11 @@ export default (state = settingsReducerDefaultState, action) => {
         ...state,
         categories: action.categories
       }
+    case 'SET_RATES':
+      return {
+        ...state,
+        rates: action.rates
+      }
     default:
       return state;
   }

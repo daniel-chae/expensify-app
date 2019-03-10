@@ -1,5 +1,16 @@
 import currencyjs from './currency.min';
 
+// Related to available App currency
+
+export const currencyList = {
+    'USD':'\u0024',
+    'THB':'\u0E3F',
+    'KRW':'\u20A9',
+    'EUR':'\u20AC',
+    'JPY':'\u00A5',
+    'INR':'\u20B9'
+}
+
 export const formattedCurrency = (amount, currency) =>{
     switch (currency) {
         case "USD":
@@ -19,12 +30,5 @@ export const formattedCurrency = (amount, currency) =>{
     }
 }
 
-export const currencyList = {
-    'USD':'\u0024',
-    'THB':'\u0E3F',
-    'KRW':'\u20A9',
-    'EUR':'\u20AC',
-    'JPY':'\u00A5',
-    'INR':'\u20B9'
-}
+// Related to Exchange Rates and conversion
 

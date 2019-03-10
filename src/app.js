@@ -11,7 +11,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import database, { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
 import { startSetIncomes } from './actions/incomes';
-import { initializeCategory } from './actions/category';
+import { initializeCategory, initializeRates } from './actions/category';
 
 const store = configureStore();
 
@@ -30,21 +30,17 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'))
 
-firebase.auth().onAuthStateChanged((user)=>{
+firebase.auth().onAuthStateChanged(async (user)=>{
     if (user) {
         store.dispatch(login(user.uid));
-        const categoryPromise = new Promise((resolve) => {
-            initializeCategory(user.uid, store, resolve)
-        })
-        categoryPromise.then(()=>{
-            store.dispatch(startSetIncomes());     
-            store.dispatch(startSetExpenses()).then(() => {
-                renderApp();
-                if (history.location.pathname === '/') {
-                    history.push('/dashboard')
-                }
-            });       
-        })
+        await store.dispatch(startSetIncomes());
+        await store.dispatch(startSetExpenses());
+        await initializeCategory(user.uid, store);
+        await initializeRates(store);
+        renderApp();
+            if (history.location.pathname === '/') {
+                history.push('/dashboard')
+            }
     } else {
         store.dispatch(logout());
         renderApp();
