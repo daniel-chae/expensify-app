@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import selectTransactions from '../selectors/transactions';
 import { totalPerCurrency } from '../selectors/transactions-total';
 import { formattedCurrency } from '../currency/currency';
 var fx = require('../currency/moneyorigin');
@@ -11,11 +10,47 @@ export class TransactionsSummary extends React.Component {
         super(props);
         this.state = {
             selectedCurrency: 'THB', // Replace it with the default currency
-            totalPerCurrency: totalPerCurrency(this.props.incomes, this.props.expenses),
+            totalPerCurrency: undefined,
             selectedConversion: 'THB',
             convertedAmount: 0
         }
     };
+    componentWillMount () {
+        if (this.props.incomes.length === 0 && this.props.expenses.length ===0 ){
+            this.setState(()=>({
+                totalPerCurrency: undefined,
+                convertedAmount: 0
+            }))
+        } else {
+            let convertedAmount = 0
+            let total = totalPerCurrency(this.props.incomes, this.props.expenses)
+            Object.keys(total).forEach((currency)=>{
+                convertedAmount += fx.convert(total[currency], {from: currency, to: this.state.selectedConversion})
+            })
+            this.setState(()=>({
+                totalPerCurrency: total,
+                convertedAmount
+            }))
+        }
+    }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.incomes.length === 0 && nextProps.expenses.length ===0 ){
+            this.setState(()=>({
+                totalPerCurrency: undefined,
+                convertedAmount: 0
+            }))
+        } else {
+            let convertedAmount = 0
+            let total = totalPerCurrency(nextProps.incomes, nextProps.expenses)
+            Object.keys(total).forEach((currency)=>{
+                convertedAmount += fx.convert(total[currency], {from: currency, to: this.state.selectedConversion})
+            })
+            this.setState(()=>({
+                totalPerCurrency: total,
+                convertedAmount
+            }))
+        }
+    } 
     onCurrencyChange = (e) => {
         const selectedCurrency = e.target.value;
         this.setState(()=>({
@@ -34,7 +69,7 @@ export class TransactionsSummary extends React.Component {
         }))
     }
 
-    renderTotalPerCurrency = (totalAssets) => {
+    renderTotalPerCurrency = (totalAssets={THB: 0}) => {
         return Object.keys(totalAssets).map((asset)=>{
             return (<option key={asset}>{asset}</option>)
         })
@@ -64,7 +99,12 @@ export class TransactionsSummary extends React.Component {
                             >
                                 {this.renderTotalPerCurrency(this.state.totalPerCurrency)}
                             </select>
-                            <h1>{formattedCurrency(this.state.totalPerCurrency[this.state.selectedCurrency]/100, this.state.selectedCurrency)}</h1>
+                            <h1>
+                                {!!this.state.totalPerCurrency?
+                                    formattedCurrency(this.state.totalPerCurrency[this.state.selectedCurrency]/100, this.state.selectedCurrency):
+                                    formattedCurrency(0, this.state.selectedCurrency)
+                                }
+                            </h1>
                         </div>
                     </div>
                         <div className="page-header__actions">
