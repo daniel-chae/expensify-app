@@ -1,7 +1,7 @@
 .page-header {
     background: $off-white;
     margin-bottom: $l-size;
-    padding: $l-size 0;
+    padding: $xs-size 0;
 }
 
 .page-header__actions {
@@ -14,17 +14,4 @@
     span {
         font-weight: 700;
     }
-}
-
-.page-header__dashboard {
-    display: flex;
-    justify-content: center;
-}
-
-.page-header__dashboard-Item {
-    margin: 0 $l-size 0 $l-size;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
 }

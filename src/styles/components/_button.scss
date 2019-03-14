@@ -10,6 +10,19 @@
     text-decoration: none;
 }
 
+.button-right {
+    background: $blue;
+    color: white;
+    border: none;
+    display: inline-block;
+    font-size: $font-size-large;
+    font-weight: 300;
+    line-height: 1;
+    padding: $s-size;
+    text-decoration: none;
+    margin-left: auto;
+}
+
 .button--link {
     background: none;
 }

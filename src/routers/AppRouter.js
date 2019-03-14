@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import AddIncomePage from '../components/AddIncomePage';
 import EditIncomePage from '../components/EditIncomePage';
+import TransactionDetailPage from '../components/TransactionDetailPage';
 
 export const history = createHistory();
 
@@ -19,6 +20,7 @@ const AppRouter = () => (
       <Switch>
         <PublicRoute path="/" component={LoginPage} exact={true} />
         <PrivateRoute path="/dashboard" component={TransactionDashboardPage} />
+        <PrivateRoute path="/transaction" component={TransactionDetailPage} />
         <PrivateRoute path="/income/create" component={AddIncomePage} />
         <PrivateRoute path="/expense/create" component={AddExpensePage} />
         <PrivateRoute path="/expense/edit/:id" component={EditExpensePage} />

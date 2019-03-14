@@ -1,4 +1,4 @@
-export const totalPerCurrency = (incomes=[], expenses=[]) => {
+export const getPerCurrencyBalance = (incomes=[], expenses=[]) => {
     const transactionSum = {};
     if (incomes.length!==0){
         incomes.forEach((income)=>{

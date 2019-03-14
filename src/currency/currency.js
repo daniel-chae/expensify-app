@@ -11,7 +11,7 @@ export const currencyList = {
     'INR':'\u20B9'
 }
 
-export const formattedCurrency = (amount, currency) =>{
+export const getFormattedCurrency = (amount, currency) =>{
     switch (currency) {
         case "USD":
             return currencyjs(amount).format(true);

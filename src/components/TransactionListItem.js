@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { formattedCurrency } from '../currency/currency';
+import { getFormattedCurrency } from '../currency/currency';
 
 const TransactionListItem = ({ description, amount, createdAt, id, type, currency }) => (
         <Link className = 'list-item' to = {type === 'expense'?`expense/edit/${id}`:`income/edit/${id}`}> 
@@ -11,7 +11,7 @@ const TransactionListItem = ({ description, amount, createdAt, id, type, currenc
             </div>
             <div className="list-item__align-right">
                 <h3 className = {type === 'expense'?'list-item__data list-item__expense':'list-item__data list-item__income'}>
-                    {formattedCurrency(amount/100, currency)}
+                    {getFormattedCurrency(amount/100, currency)}
                 </h3>
                 <span className = 'list-item__sub-title'>{type === 'expense'?'paid':'receieved'}</span>
             </div>

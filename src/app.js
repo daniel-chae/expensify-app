@@ -12,6 +12,11 @@ import database, { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
 import { startSetIncomes } from './actions/incomes';
 import { initializeCategory, initializeRates } from './actions/category';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faMinus, faBars } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faPlus, faMinus,faBars)
 
 const store = configureStore();
 
