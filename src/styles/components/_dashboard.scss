@@ -2,16 +2,21 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: $l-size $m-size;
+    margin-bottom: $xxl-size;
     @media (max-width: $desktop-breakpoint) {
         grid-template-columns: 1fr
     }
+}
+
+.dashboard__text {
+    font-size: $m-size;
 }
 
 .dashboard__item {
     margin: 0 $l-size 0 $l-size;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
     border: 1px solid $off-white;
     padding: $s-size;

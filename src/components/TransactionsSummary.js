@@ -13,7 +13,7 @@ export class TransactionsSummary extends React.Component {
             perCurrencyBalance: undefined,
             selectedConversion: 'THB',
             convertedAmount: 0,
-            quote: ""
+            quote: []
         }
     };
     componentWillMount () {
@@ -77,7 +77,6 @@ export class TransactionsSummary extends React.Component {
     };
     quote = () => {
         getQuote().then((quote)=>{
-            console.log(quote)
             this.setState(()=>({
                 quote
             }))
@@ -95,6 +94,12 @@ export class TransactionsSummary extends React.Component {
 
                 <div className="content-container">
                     <div className="dashboard">
+                        <div className="dashboard__item">
+                            <h2>Special Quote for you</h2>
+                            <div className="dashboard__text">
+                                <span>"</span>{this.state.quote[0]}<br />-{this.state.quote[1]}<span>"</span>
+                            </div>
+                        </div>
                         <div className="dashboard__item">
                             <h2>Converted Total Balance</h2>
                             <select 
@@ -121,11 +126,6 @@ export class TransactionsSummary extends React.Component {
                                     getFormattedCurrency(0, this.state.selectedCurrency) 
                                 }
                             </h1>
-                        </div>
-                        <div className="dashboard__item">
-                            <h2>
-                                <span>"</span>{this.state.quote}<span>"</span>
-                            </h2>
                         </div>
                     </div>
                 </div>

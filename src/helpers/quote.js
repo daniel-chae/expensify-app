@@ -4,7 +4,7 @@ export const getQuote = async () => {
         const data = await response.json();
         const quote = data.quote.body;
         const author = data.quote.author;
-        return `${quote} - ${author}`
+        return [quote, author]
     }
 
 }
