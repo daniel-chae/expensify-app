@@ -2,6 +2,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: $l-size $m-size;
+    @media (max-width: $desktop-breakpoint) {
+        grid-template-columns: 1fr
+    }
 }
 
 .dashboard__item {
