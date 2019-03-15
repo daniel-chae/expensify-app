@@ -72,7 +72,7 @@ class IncomeForm extends React.Component {
     })
     render() {
         return (
-            <div className = "form__container">
+            <div>
                 <form
                     className = "form"
                     onSubmit = {this.onSubmit}

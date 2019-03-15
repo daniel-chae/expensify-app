@@ -2,7 +2,6 @@ export const getPerCurrencyBalance = (incomes=[], expenses=[]) => {
     const transactionSum = {};
     if (incomes.length!==0){
         incomes.forEach((income)=>{
-            console.log("reached1")
             if (!transactionSum[income.currency]) {
                 transactionSum[income.currency]=0
                 transactionSum[income.currency]+=income.amount
@@ -13,7 +12,6 @@ export const getPerCurrencyBalance = (incomes=[], expenses=[]) => {
     }
     if (expenses.length!==0){
         expenses.forEach((expense)=>{
-            console.log("reached2")
             if (!transactionSum[expense.currency]) {
                 transactionSum[expense.currency]=0
                 transactionSum[expense.currency]-=expense.amount
@@ -22,7 +20,6 @@ export const getPerCurrencyBalance = (incomes=[], expenses=[]) => {
             };
         });
     }
-    console.log(transactionSum)
     return transactionSum
 };
 
