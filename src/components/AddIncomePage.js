@@ -6,7 +6,7 @@ import { startAddIncome } from '../actions/incomes';
 export class AddIncomePage extends React.Component {
     onSubmit = (income) => {
         this.props.startAddIncome(income)
-        this.props.history.push('/'); //our component rendered thorugh react router comes with bunch of methods
+        this.props.history.push('/transaction'); //our component rendered thorugh react router comes with bunch of methods
       };
       render() {
         return (

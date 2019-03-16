@@ -9,71 +9,67 @@ export class TransactionsSummary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCurrency: 'THB', // Replace it with the default currency
+            selectedCurrency: undefined, // Replace it with the default currency
+            selectedConversion: undefined,
             perCurrencyBalance: undefined,
-            selectedConversion: 'THB',
-            convertedAmount: 0,
+            displayCurrency: "Select Currency",
+            displayConversion: "Select Currency",
+            convertedBalance: 0,
+            noTransaction: false,
             quote: []
         }
     };
     componentWillMount () {
-        if (this.props.incomes.length === 0 && this.props.expenses.length ===0 ){
+        if (this.props.incomes.length === 0 && this.props.expenses.length === 0 ){
+            console.log("no transaction1")
             this.setState(()=>({
-                perCurrencyBalance: undefined,
-                convertedAmount: 0
+                noTransaction: true
             }))
         } else {
-            let convertedAmount = 0
-            let perCurrencyBalance = getPerCurrencyBalance(this.props.incomes, this.props.expenses)
-            Object.keys(perCurrencyBalance).forEach((currency)=>{
-                convertedAmount += fx.convert(perCurrencyBalance[currency], {from: currency, to: this.state.selectedConversion})
-            })
             this.setState(()=>({
-                perCurrencyBalance,
-                convertedAmount
+                perCurrencyBalance: getPerCurrencyBalance(this.props.incomes, this.props.expenses)
             }))
         }
         this.quote()
     };
     componentWillReceiveProps (nextProps) {
         if (nextProps.incomes.length === 0 && nextProps.expenses.length ===0 ){
+            console.log("no transaction2")
             this.setState(()=>({
-                perCurrencyBalance: undefined,
-                convertedAmount: 0
+                noTransaction: true
             }))
         } else {
-            let convertedAmount = 0
-            let perCurrencyBalance = getPerCurrencyBalance(nextProps.incomes, nextProps.expenses)
-            Object.keys(perCurrencyBalance).forEach((currency)=>{
-                convertedAmount += fx.convert(perCurrencyBalance[currency], {from: currency, to: this.state.selectedConversion})
-            })
             this.setState(()=>({
-                perCurrencyBalance,
-                convertedAmount
+                perCurrencyBalance: getPerCurrencyBalance(this.props.incomes, this.props.expenses)
             }))
         }
-    } 
+    };
     onConversionChange = (e) => {
         const selectedConversion = e.target.value;
-        let convertedAmount = 0
+        let convertedBalance = 0
         Object.keys(this.state.perCurrencyBalance).forEach((currency)=>{
-                convertedAmount += fx.convert(this.state.perCurrencyBalance[currency], {from: currency, to: selectedConversion})
+                convertedBalance += fx.convert(this.state.perCurrencyBalance[currency], {from: currency, to: selectedConversion})
             })
         this.setState(()=>({
             selectedConversion,
-            convertedAmount
+            convertedBalance,
+            displayConversion: getFormattedCurrency(this.state.perCurrencyBalance[selectedConversion]/100, selectedConversion)
         }))
-    }
+    };
+
     onCurrencyChange = (e) => {
         const selectedCurrency = e.target.value;
         this.setState(()=>({
-            selectedCurrency
+            selectedCurrency,
+            displayCurrency: getFormattedCurrency(this.state.perCurrencyBalance[selectedCurrency]/100, selectedCurrency)
         }))
-    }
-    renderCurrencyOptions = (perCurrencyBalance = {'THB': 0}) => { //Update 'THB' to default currency
+    };
+    renderCurrencyOptions = (perCurrencyBalance) => { //Update 'THB' to default currency
+        if(!!perCurrencyBalance){
         return Object.keys(perCurrencyBalance).map((currency)=>{
             return (<option key={currency}>{currency}</option>)
-        })
+            })
+        }
     };
     quote = () => {
         getQuote().then((quote)=>{
@@ -82,7 +78,24 @@ export class TransactionsSummary extends React.Component {
             }))
         })
     }
-
+    getBalance = () => {
+        if (this.state.noTransaction) {
+            return "No Balance"
+        } else if (!this.selectedCurrency) {
+            return "Select Currency" 
+        } else {
+            return getFormattedCurrency(this.state.selectedCurrency/100, this.state.selectedCurrency)
+        }
+    };
+    getConvertedBalance = () => {
+        if (this.state.noTransaction) {
+            return "No Balance"
+        } else if (!this.selectedConversion) {
+            return "Select Currency" 
+        } else {
+            return getFormattedCurrency(this.state.convertedBalance/100, this.state.selectedConversion)
+        }
+    };
     render() {
         return (
                 <div>
@@ -106,10 +119,13 @@ export class TransactionsSummary extends React.Component {
                                 onChange = {this.onConversionChange} 
                                 value={this.state.selectedConversion}
                                 className = "select"
-                            >
+                            >   
+                                <option defaultValue hidden></option>
                                 {this.renderCurrencyOptions(this.state.perCurrencyBalance)}
                             </select>
-                            <h1>{getFormattedCurrency(this.state.convertedAmount/100, this.state.selectedConversion)}</h1>
+                            <h1>
+                                {this.state.noTransaction?"No Balance":this.state.displayConversion}
+                            </h1>
                         </div>
                         <div className="dashboard__item">
                             <h2>Balance Per Currency</h2>
@@ -118,13 +134,11 @@ export class TransactionsSummary extends React.Component {
                                 value = {this.state.selectedCurrency} //Starts with default value but updated whenever value is updated
                                 className = "select"
                             >
+                                <option defaultValue hidden></option>
                                 {this.renderCurrencyOptions(this.state.perCurrencyBalance)}
                             </select>
                             <h1>
-                                {!!this.state.perCurrencyBalance? //If there is balance
-                                    getFormattedCurrency(this.state.perCurrencyBalance[this.state.selectedCurrency]/100, this.state.selectedCurrency): //render it with formatted Currency
-                                    getFormattedCurrency(0, this.state.selectedCurrency) 
-                                }
+                                {this.state.noTransaction?"No Balance":this.state.displayCurrency}
                             </h1>
                         </div>
                     </div>

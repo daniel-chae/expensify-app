@@ -27,22 +27,24 @@ const jsx = (
 )
 let hasRendered = false;
 const renderApp = () => {
-    if (!hasRendered) {
+    console.log("rendering happens here!")
         ReactDOM.render(jsx, document.getElementById('app'));
-        hasRendered = true;        
-    }
+        hasRendered = true;    
 };
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'))
 
 firebase.auth().onAuthStateChanged(async (user)=>{
     if (user) {
+        console.log("test1")
         store.dispatch(login(user.uid));
         await store.dispatch(startSetIncomes());
         await store.dispatch(startSetExpenses());
         await initializeCategory(user.uid, store);
         await initializeRates(store);
+        console.log("test3")
         renderApp();
+        console.log("test4")
             if (history.location.pathname === '/') {
                 history.push('/dashboard')
             }

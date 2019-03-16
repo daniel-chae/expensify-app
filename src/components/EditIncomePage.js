@@ -6,11 +6,11 @@ import { startEditIncome, startRemoveIncome } from '../actions/incomes';
 export class EditIncomePage extends React.Component {
   onSubmit = (update) => {
     this.props.startEditIncome(this.props.income.id, update)
-    this.props.history.push('/')
+    this.props.history.push('/transaction')
   };
   onClick = () => {
     this.props.startRemoveIncome({ id: this.props.income.id })
-    this.props.history.push('/')
+    this.props.history.push('/transaction')
   };
   render() {
     return (

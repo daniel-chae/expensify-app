@@ -8,14 +8,24 @@ import settingsReducer from '../reducers/settings';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const appReducer = combineReducers({
+  expenses: expensesReducer,
+  incomes: incomesReducer,
+  filters: filtersReducer,
+  auth: authReducer,
+  settings: settingsReducer
+})
+
+const rootReducer = (state, action) => {
+  if (action.type === 'LOGOUT') {
+    state = undefined
+  }
+  return appReducer(state, action)
+}
+
+
 export default () => {
-  const store = createStore(combineReducers({
-    expenses: expensesReducer,
-    incomes: incomesReducer,
-    filters: filtersReducer,
-    auth: authReducer,
-    settings: settingsReducer
-  }), composeEnhancers(applyMiddleware(thunk))
+  const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk))
     // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
   return store;

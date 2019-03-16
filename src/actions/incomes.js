@@ -62,10 +62,13 @@ export const startEditIncome = (id, updates) => {
 }
 
 // SET_EXPENSES
-export const setIncomes = (incomes) => ({
+export const setIncomes = (incomes) => {
+  console.log("test2")
+  return {
   type: 'SET_INCOMES',
   incomes
-})
+  }
+}
 
 // export const startSetExpenses;
 export const startSetIncomes = () => {
