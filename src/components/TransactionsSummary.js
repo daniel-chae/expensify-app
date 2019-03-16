@@ -21,25 +21,26 @@ export class TransactionsSummary extends React.Component {
     };
     componentWillMount () {
         if (this.props.incomes.length === 0 && this.props.expenses.length === 0 ){
-            console.log("no transaction1")
             this.setState(()=>({
                 noTransaction: true
             }))
         } else {
             this.setState(()=>({
+                noTransaction: false,
                 perCurrencyBalance: getPerCurrencyBalance(this.props.incomes, this.props.expenses)
             }))
         }
         this.quote()
     };
+
     componentWillReceiveProps (nextProps) {
         if (nextProps.incomes.length === 0 && nextProps.expenses.length ===0 ){
-            console.log("no transaction2")
             this.setState(()=>({
                 noTransaction: true
             }))
         } else {
             this.setState(()=>({
+                noTransaction: false,
                 perCurrencyBalance: getPerCurrencyBalance(this.props.incomes, this.props.expenses)
             }))
         }
