@@ -41,7 +41,7 @@ export class TransactionsSummary extends React.Component {
         } else {
             this.setState(()=>({
                 noTransaction: false,
-                perCurrencyBalance: getPerCurrencyBalance(this.props.incomes, this.props.expenses)
+                perCurrencyBalance: getPerCurrencyBalance(nextProps.incomes, nextProps.expenses)
             }))
         }
     };
@@ -54,7 +54,7 @@ export class TransactionsSummary extends React.Component {
         this.setState(()=>({
             selectedConversion,
             convertedBalance,
-            displayConversion: getFormattedCurrency(this.state.perCurrencyBalance[selectedConversion]/100, selectedConversion)
+            displayConversion: getFormattedCurrency(convertedBalance/100, selectedConversion)
         }))
     };
 
@@ -141,6 +141,10 @@ export class TransactionsSummary extends React.Component {
                             <h1>
                                 {this.state.noTransaction?"No Balance":this.state.displayCurrency}
                             </h1>
+                        </div>
+                        <div className="dashboard__item">
+                            <h2>Additional Feature</h2>
+                            <h3>Additional Feature will be added here!</h3>
                         </div>
                     </div>
                 </div>
