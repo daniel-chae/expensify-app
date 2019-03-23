@@ -4,6 +4,7 @@ import { getPerCurrencyBalance } from '../selectors/transactions-total';
 import { getFormattedCurrency } from '../currency/currency';
 import { getQuote } from '../helpers/quote';
 var fx = require('../currency/moneyorigin');
+import Button from '@material-ui/core/Button';
 
 export class TransactionsSummary extends React.Component {
     constructor(props) {
@@ -145,6 +146,9 @@ export class TransactionsSummary extends React.Component {
                         <div className="dashboard__item">
                             <h2>Additional Feature</h2>
                             <h3>Additional Feature will be added here!</h3>
+                            <Button variant="contained" color="primary">
+                            Hello World
+                            </Button>
                         </div>
                     </div>
                 </div>
